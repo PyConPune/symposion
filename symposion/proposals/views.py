@@ -12,7 +12,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import static
 
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -205,7 +205,7 @@ def proposal_edit(request, pk):
         if form.is_valid():
             form.save()
             if hasattr(proposal, "reviews"):
-                users = User.objects.filter(
+                users = get_user_model().objects.filter(
                     Q(review__proposal=proposal) |
                     Q(proposalmessage__proposal=proposal)
                 )
@@ -252,7 +252,7 @@ def proposal_detail(request, pk):
                 message.save()
 
                 ProposalMessage = SpeakerCommentForm.Meta.model
-                reviewers = User.objects.filter(
+                reviewers = get_user_model().objects.filter(
                     id__in=ProposalMessage.objects.filter(
                         proposal=proposal
                     ).exclude(

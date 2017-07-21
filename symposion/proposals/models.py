@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 import os
 import uuid
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
@@ -9,7 +10,6 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import now
 
-from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.exceptions import ValidationError
 
@@ -217,7 +217,7 @@ class SupportingDocument(models.Model):
 
     proposal = models.ForeignKey(ProposalBase, related_name="supporting_documents", verbose_name=_("Proposal"))
 
-    uploaded_by = models.ForeignKey(User, verbose_name=_("Uploaded by"))
+    uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Uploaded by"))
 
     created_at = models.DateTimeField(default=now, verbose_name=_("Created at"))
 
