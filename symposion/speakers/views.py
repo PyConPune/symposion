@@ -4,7 +4,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
 from account.decorators import login_required
@@ -47,7 +47,7 @@ def speaker_create(request):
 
 @login_required
 def speaker_create_staff(request, pk):
-    user = get_object_or_404(User, pk=pk)
+    user = get_object_or_404(get_user_model(), pk=pk)
     if not request.user.is_staff:
         raise Http404
 
