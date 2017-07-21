@@ -6,7 +6,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader, Context
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.contrib.sites.models import Site
 
@@ -259,7 +259,7 @@ def session_staff_email(request):
     if not request.user.is_staff:
         return redirect("schedule_session_list")
 
-    data = "\n".join(user.email for user in User.objects.filter(sessionrole__isnull=False).distinct())
+    data = "\n".join(user.email for user in get_user_model().objects.filter(sessionrole__isnull=False).distinct())
 
     return HttpResponse(data, content_type="text/plain;charset=UTF-8")
 

@@ -2,8 +2,8 @@ from __future__ import unicode_literals
 
 import datetime
 
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.models import User
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
@@ -277,7 +277,7 @@ class SessionRole(models.Model):
     ]
 
     session = models.ForeignKey(Session, verbose_name=_("Session"))
-    user = models.ForeignKey(User, verbose_name=_("User"))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("User"))
     role = models.IntegerField(choices=SESSION_ROLE_TYPES, verbose_name=_("Role"))
     status = models.NullBooleanField(verbose_name=_("Status"))
 
