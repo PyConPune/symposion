@@ -1,11 +1,10 @@
 from __future__ import unicode_literals
 from django import forms
 
+from django.contrib.auth import get_user_model
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-
-from django.contrib.auth.models import User
 
 from symposion.teams.models import Membership
 
@@ -28,8 +27,8 @@ class TeamInvitationForm(forms.Form):
             raise forms.ValidationError(_("valid email address required"))
 
         try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
+            user = get_user_model().objects.get(email=email)
+        except get_user_model().DoesNotExist:
             # eventually we can invite them but for now assume they are
             # already on the site
             raise forms.ValidationError(
