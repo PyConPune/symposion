@@ -82,7 +82,7 @@ MEMBERSHIP_STATE_CHOICES = [
 
 class Membership(models.Model):
 
-    user = models.ForeignKey(settings.AUTH_MODEL_USER, related_name="memberships",
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="memberships",
                              verbose_name=_("User"))
     team = models.ForeignKey(Team, related_name="memberships",
                              verbose_name=_("Team"))
